@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 export FORCE_COLOR=1
 
 echo '🎨 Formating and checking staged files before committing!'
