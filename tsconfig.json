@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "target": "ES6",
     "module": "Node16",
     "lib": ["ES2022", "DOM"],
@@ -20,7 +25,9 @@
     "strictNullChecks": false,
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@infrastructure/*": ["src/infrastructure/*"],
+      "@application/*": ["src/application/*"]
     },
     "esModuleInterop": true
   },
