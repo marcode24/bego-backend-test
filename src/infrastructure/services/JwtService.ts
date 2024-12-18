@@ -1,17 +1,14 @@
+import EnvConfig from 'application/config/EnvConfig.ts';
+import { IJwtService } from 'domain/services/IJwtService.ts';
 import jwt from 'jsonwebtoken';
 import { injectable } from 'tsyringe';
 
 @injectable()
-export class JwtService {
-  private readonly secret: string;
-  private readonly expiresIn: string;
-  private readonly issuer: string;
-
-  constructor(secret: string, expiresIn: string, issuer: string) {
-    this.secret = secret;
-    this.expiresIn = expiresIn;
-    this.issuer = issuer;
-  }
+export class JwtService implements IJwtService {
+  private readonly envConfig = new EnvConfig();
+  private readonly secret: string = this.envConfig.env.JWT_SECRET;
+  private readonly expiresIn: string = this.envConfig.env.JWT_EXPIRES_IN;
+  private readonly issuer: string = this.envConfig.env.JWT_ISSUER;
 
   public generateToken(payload: Record<string, unknown>): string {
     return jwt.sign(payload, this.secret, {
