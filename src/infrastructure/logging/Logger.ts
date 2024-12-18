@@ -29,6 +29,16 @@ const logger = winston.createLogger({
         })
       ),
     }),
+    new winston.transports.File({
+      filename: path.join(__dirname, 'logs', 'error.log'),
+      level: 'error', // Solo guarda los logs de nivel 'error'
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.printf(({ timestamp, level, message }) => {
+          return `[${timestamp}] ${level}: ${message}`;
+        })
+      ),
+    }),
   ],
 });
 
