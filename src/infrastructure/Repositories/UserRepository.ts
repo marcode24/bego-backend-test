@@ -5,6 +5,13 @@ import { injectable } from 'tsyringe';
 
 @injectable()
 export class UserRepository implements IUserRepository {
+  async findById(id: string): Promise<User> {
+    const userDocument = await UserModel.findById(id).exec();
+    if (!userDocument) return null;
+
+    return User.FromDocument(userDocument);
+  }
+
   findByEmail(email: string): Promise<User | null> {
     return UserModel.findOne({ email }).exec();
   }
