@@ -5,6 +5,9 @@ import { injectable } from 'tsyringe';
 
 @injectable()
 export class UserRepository implements IUserRepository {
+  delete(id: string): Promise<boolean> {
+    throw new Error('Method not implemented.' + id);
+  }
   async findById(id: string): Promise<User> {
     const userDocument = await UserModel.findById(id).exec();
     if (!userDocument) return null;

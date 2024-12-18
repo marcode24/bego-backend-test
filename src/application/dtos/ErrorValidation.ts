@@ -1,4 +1,4 @@
-import { ResponseDto } from './ResponseDto.js';
+import { ResponseDto } from './ResponseDto.ts';
 
 export class ErrorValidation extends ResponseDto<string> {
   constructor(errors: string[]) {

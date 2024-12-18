@@ -3,6 +3,7 @@ import { TruckController } from 'api/modules/trucks/controllers/TruckController.
 import { UserController } from 'api/modules/users/controllers/UserController.ts';
 import LoginUser from 'application/modules/auth/LoginUser.ts';
 import CreateTruck from 'application/modules/trucks/CreateTruck.ts';
+import DeleteTruck from 'application/modules/trucks/DeleteTruck.ts';
 import CreateUser from 'application/modules/users/CreateUser.ts';
 import { ITruckRepository } from 'domain/repositories/ITruckRepository.ts';
 import { IUserRepository } from 'domain/repositories/IUserRepository.ts';
@@ -21,6 +22,7 @@ container.registerSingleton('AuthController', AuthController);
 
 container.registerSingleton<ITruckRepository>('ITruckRepository', TruckRepository);
 container.registerSingleton('CreateTruck', CreateTruck);
+container.registerSingleton('DeleteTruck', DeleteTruck);
 container.registerSingleton('TruckController', TruckController);
 
 export { container };

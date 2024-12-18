@@ -20,6 +20,11 @@ export class TruckRepository implements ITruckRepository {
     return Truck.FromDocument(truckDocument);
   }
 
+  async delete(id: string): Promise<boolean> {
+    const truckDocument = await TruckModel.findByIdAndDelete(id).exec();
+    return !!truckDocument;
+  }
+
   async create(data: Truck): Promise<Truck> {
     const truckDoc = new TruckModel(data);
     const newTruck = await truckDoc.save();
