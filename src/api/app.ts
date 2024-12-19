@@ -4,6 +4,7 @@ import UserRoute from './modules/users/routes/UserRoute.ts';
 import AuthRoute from './modules/auth/routes/AuthRoute.ts';
 import TruckRoute from './modules/trucks/routes/TruckRoute.ts';
 import LocationRoute from './modules/locations/routes/LocationRoute.ts';
+import OrderRoute from './modules/orders/routes/OrderRoute.ts';
 
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -26,5 +27,6 @@ UserRoute(`${PREFIX}${VERSION}`, app);
 AuthRoute(`${PREFIX}${VERSION}`, app);
 TruckRoute(`${PREFIX}${VERSION}`, app);
 LocationRoute(`${PREFIX}${VERSION}`, app);
+OrderRoute(`${PREFIX}${VERSION}`, app);
 
 export default app;
