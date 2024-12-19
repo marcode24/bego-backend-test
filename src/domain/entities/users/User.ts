@@ -10,13 +10,13 @@ export class User {
   private constructor(
     name: string,
     email: string,
-    password: string,
-    createdAt: Date,
-    updatedAt: Date
+    password?: string,
+    createdAt: Date = new Date(),
+    updatedAt: Date = new Date()
   ) {
     this.name = name;
     this.email = email;
-    this.password = password;
+    this.password = password || '';
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
@@ -32,5 +32,9 @@ export class User {
   static create(name: string, email: string, password: string): User {
     const user = new User(name, email, password, new Date(), new Date());
     return user;
+  }
+
+  static FromDocument(document): User {
+    return new User(document.name, document.email, document.createdAt, document.updatedAt);
   }
 }
