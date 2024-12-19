@@ -6,6 +6,7 @@ import { CreateLocationValidator } from 'application/modules/locations/validator
 import { validateParams } from 'infrastructure/middlewares/validateParams.ts';
 import { GetLocationValidator } from 'application/modules/locations/validators/GetLocationValidator.ts';
 import { validateJwt } from 'infrastructure/middlewares/validateJwt.ts';
+import { UpdateLocationValidator } from 'application/modules/locations/validators/UpdateLocationValidator.ts';
 
 export default (prefix: string, app: Router): void => {
   const locationController = container.resolve(LocationController);
@@ -26,5 +27,13 @@ export default (prefix: string, app: Router): void => {
     validateJwt,
     validateParams(GetLocationValidator),
     (req, res) => locationController.delete(req, res)
+  );
+
+  app.put(
+    `${prefix}/locations/:id`,
+    validateJwt,
+    validateParams(GetLocationValidator),
+    validateRequest(UpdateLocationValidator),
+    (req, res) => locationController.update(req, res)
   );
 };

@@ -7,7 +7,8 @@ export class LocationMessages {
   public static readonly locationsNotFound = 'Locations not found';
   public static readonly locationsFound = 'Locations found';
   public static readonly CreateLocationSuccess = 'Location created';
-  public static readonly locationWithSamePlaceIdExists = (placeId: string): string =>
+  public static readonly NoFieldsToUpdate: string = 'No fields to update';
+  public static readonly LocationWithSamePlaceIdExists = (placeId: string): string =>
     `Location with placeId ${placeId} already exists`;
 
   public static readonly LocationNotFound = (placeId: string): string =>
@@ -24,6 +25,9 @@ export class LocationMessages {
 
   public static readonly PlaceIdNotFound = (placeId: string): string =>
     `PlaceId ${placeId} not found`;
+
+  public static readonly PlaceIdNotFoundApi = (placeId: string): string =>
+    `PlaceId ${placeId} not found in google maps api`;
 
   public static readonly LocationNotFoundWithId = (id: string): string =>
     `Location with id ${id} not found`;
