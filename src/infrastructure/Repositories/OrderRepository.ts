@@ -32,10 +32,11 @@ export class OrderRepository implements IOrderRepository {
       .populate('pickup', 'address latitude longitude')
       .populate('dropoff', 'address latitude longitude')
       .exec();
-    return Order.FromDocument(orderPopulated);
+
+    return orderPopulated ? Order.FromDocument(orderPopulated) : null;
   }
 
-  find(
+  async find(
     all: boolean,
     page?: number,
     limit?: number,

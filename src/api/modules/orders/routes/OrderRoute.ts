@@ -17,6 +17,10 @@ export default (prefix: string, app: Router): void => {
     orderController.getAll(req, res)
   );
 
+  app.get(`${prefix}/orders/:id`, validateJwt, validateParams(OrderIdValidator), (req, res) =>
+    orderController.get(req, res)
+  );
+
   app.post(`${prefix}/orders`, validateJwt, validateRequest(CreateOrderValidator), (req, res) =>
     orderController.create(req, res)
   );

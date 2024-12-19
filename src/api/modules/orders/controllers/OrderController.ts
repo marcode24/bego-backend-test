@@ -4,13 +4,15 @@ import { inject, injectable } from 'tsyringe';
 import { Request, Response } from 'express';
 import ChangeStatusOrder from 'application/modules/orders/ChangeStatusOrder.ts';
 import GetOrders from 'application/modules/orders/GetOrders.ts';
+import GetOrder from 'application/modules/orders/GetOrder.ts';
 
 @injectable()
 export class OrderController {
   constructor(
     @inject('CreateOrder') private createOrder: CreateOrder,
     @inject('ChangeStatusOrder') private changeStatusOrder: ChangeStatusOrder,
-    @inject('GetOrders') private getOrders: GetOrders
+    @inject('GetOrders') private getOrders: GetOrders,
+    @inject('GetOrder') private getOrder: GetOrder
   ) {}
 
   async create(request: Request, response: Response): Promise<void> {
@@ -34,6 +36,12 @@ export class OrderController {
       limit: +limit,
       status: status as string,
     });
+    response.status(result.statusCode).json(result);
+  }
+
+  async get(request: Request, response: Response): Promise<void> {
+    const { id } = request.params;
+    const result = await this.getOrder.execute(id);
     response.status(result.statusCode).json(result);
   }
 }

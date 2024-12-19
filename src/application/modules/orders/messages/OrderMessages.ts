@@ -8,6 +8,7 @@ export class OrderMessages {
   public static readonly UserNotFound: string = 'User not found';
   public static readonly OrderNotDeleted: string = 'Order not deleted';
   public static readonly OrdersNotFound: string = 'Orders not found';
+  public static readonly OrderFound: string = 'Order found';
   public static readonly OrdersFound: string = 'Orders found';
   public static readonly NoFieldsToUpdate: string = 'No fields to update';
   public static readonly OrderWithSamePlatesExists = (plates: string): string =>
