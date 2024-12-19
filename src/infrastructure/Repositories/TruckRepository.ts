@@ -6,6 +6,15 @@ import { injectable } from 'tsyringe';
 
 @injectable()
 export class TruckRepository implements ITruckRepository {
+  async update(id: string, newData: Partial<Truck>): Promise<Truck> {
+    const updatedTruck = await TruckModel.findByIdAndUpdate(
+      id,
+      { $set: newData },
+      { new: true }
+    ).exec();
+    return Truck.FromDocument(updatedTruck);
+  }
+
   async find(
     all: boolean = false,
     page: number = 1,
@@ -47,7 +56,6 @@ export class TruckRepository implements ITruckRepository {
   async findByPlate(plates: string): Promise<Truck | null> {
     const truckDocument: ITruckDocument | null = await TruckModel.findOne({ plates }).exec();
     if (!truckDocument) return null;
-
     return Truck.FromDocument(truckDocument);
   }
 

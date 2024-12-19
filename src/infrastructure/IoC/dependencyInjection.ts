@@ -6,6 +6,7 @@ import CreateTruck from 'application/modules/trucks/CreateTruck.ts';
 import DeleteTruck from 'application/modules/trucks/DeleteTruck.ts';
 import GetTruck from 'application/modules/trucks/GetTruck.ts';
 import GetTrucks from 'application/modules/trucks/GetTrucks.ts';
+import UpdateTruck from 'application/modules/trucks/UpdateTruck.ts';
 import CreateUser from 'application/modules/users/CreateUser.ts';
 import { ITruckRepository } from 'domain/repositories/ITruckRepository.ts';
 import { IUserRepository } from 'domain/repositories/IUserRepository.ts';
@@ -27,6 +28,7 @@ container.registerSingleton('CreateTruck', CreateTruck);
 container.registerSingleton('GetTruck', GetTruck);
 container.registerSingleton('GetTrucks', GetTrucks);
 container.registerSingleton('DeleteTruck', DeleteTruck);
+container.registerSingleton('UpdateTruck', UpdateTruck);
 container.registerSingleton('TruckController', TruckController);
 
 export { container };

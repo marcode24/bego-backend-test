@@ -11,7 +11,10 @@ export default class DeleteTruck {
   public async execute(id: string): Promise<DeleteTruckResponse<string>> {
     const truckExists = await this.truckRepository.findById(id);
     if (!truckExists) {
-      return DeleteTruckResponse.Failure<string>(TruckMessages.TruckNotFound, HttpStatus.NOT_FOUND);
+      return DeleteTruckResponse.Failure<string>(
+        TruckMessages.TruckNotFound(id),
+        HttpStatus.NOT_FOUND
+      );
     }
 
     const deleted = await this.truckRepository.delete(id);
