@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Location } from 'domain/entities/locations/Location.ts';
 import { ILocationRepository } from 'domain/repositories/ILocationRepository.ts';
 import LocationModel from 'infrastructure/database/schemas/location/LocationSchema.ts';
@@ -36,11 +35,34 @@ export class LocationRepository implements ILocationRepository {
     return location ? Location.FromDocument(location) : null;
   }
 
-  find(
+  async find(
     all: boolean,
     page?: number,
     limit?: number
   ): Promise<{ items: Location[]; totalPages: number; totalItems: number }> {
-    throw new Error('Method not implemented.');
+    if (all) {
+      const locations = await LocationModel.find({}).exec();
+      return {
+        items: locations.map((truck) => Location.FromDocument(truck)),
+        totalPages: 1,
+        totalItems: locations.length,
+      };
+    }
+
+    const [totalLocations, locations] = await Promise.all([
+      LocationModel.countDocuments({}).exec(),
+      LocationModel.find({})
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec(),
+    ]);
+
+    const totalPages = Math.ceil(totalLocations / limit);
+
+    return {
+      items: locations.map((truck) => Location.FromDocument(truck)),
+      totalPages,
+      totalItems: totalLocations,
+    };
   }
 }
