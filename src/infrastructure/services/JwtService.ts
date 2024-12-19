@@ -23,7 +23,7 @@ export class JwtService implements IJwtService {
         issuer: this.issuer,
       }) as Record<string, unknown>;
     } catch {
-      throw new Error('Invalid token');
+      return null;
     }
   }
 }
