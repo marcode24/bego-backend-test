@@ -7,9 +7,15 @@ import { CreateOrderValidator } from 'application/modules/orders/validators/Crea
 import { ChangeStatusOrderValidator } from 'application/modules/orders/validators/ChangeStatusOrderValidator.ts';
 import { validateParams } from 'infrastructure/middlewares/validateParams.ts';
 import { OrderIdValidator } from 'application/modules/orders/validators/OrderIdValidator.ts';
+import { validateQuery } from 'infrastructure/middlewares/validateQuery.ts';
+import { GeetOrderValidator } from 'application/modules/orders/validators/GetOrdersValidator.ts';
 
 export default (prefix: string, app: Router): void => {
   const orderController = container.resolve(OrderController);
+
+  app.get(`${prefix}/orders`, validateJwt, validateQuery(GeetOrderValidator), (req, res) =>
+    orderController.getAll(req, res)
+  );
 
   app.post(`${prefix}/orders`, validateJwt, validateRequest(CreateOrderValidator), (req, res) =>
     orderController.create(req, res)

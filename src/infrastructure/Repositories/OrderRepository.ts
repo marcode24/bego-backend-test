@@ -38,8 +38,39 @@ export class OrderRepository implements IOrderRepository {
   find(
     all: boolean,
     page?: number,
-    limit?: number
+    limit?: number,
+    status?: string
   ): Promise<{ items: Order[]; totalPages: number; totalItems: number }> {
-    throw new Error('Method not implemented.');
+    const query = status ? { status } : {};
+
+    if (all) {
+      return OrderModel.find(query)
+        .populate('truck', 'plates color year')
+        .populate('user', 'name email')
+        .populate('pickup', 'address latitude longitude')
+        .populate('dropoff', 'address latitude longitude')
+        .exec()
+        .then((orders) => ({
+          items: orders.map((order) => Order.FromDocument(order)),
+          totalPages: 1,
+          totalItems: orders.length,
+        }));
+    }
+
+    return Promise.all([
+      OrderModel.countDocuments(query).exec(),
+      OrderModel.find(query)
+        .populate('truck', 'plates color year')
+        .populate('user', 'name email')
+        .populate('pickup', 'address latitude longitude')
+        .populate('dropoff', 'address latitude longitude')
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec(),
+    ]).then(([totalItems, orders]) => ({
+      items: orders.map((order) => Order.FromDocument(order)),
+      totalPages: Math.ceil(totalItems / limit),
+      totalItems,
+    }));
   }
 }

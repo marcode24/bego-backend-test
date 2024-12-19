@@ -6,6 +6,7 @@ export interface IBaseRepository<T> {
   find(
     all: boolean,
     page?: number,
-    limit?: number
+    limit?: number,
+    status?: string
   ): Promise<{ items: T[]; totalPages: number; totalItems: number }>;
 }
