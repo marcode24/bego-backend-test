@@ -6,6 +6,37 @@ import { injectable } from 'tsyringe';
 
 @injectable()
 export class TruckRepository implements ITruckRepository {
+  async find(
+    all: boolean = false,
+    page: number = 1,
+    limit: number = 10
+  ): Promise<{ items: Truck[]; totalPages: number; totalItems: number }> {
+    if (all) {
+      const trucks = await TruckModel.find({}).exec();
+      return {
+        items: trucks.map((truck) => Truck.FromDocument(truck)),
+        totalPages: 1,
+        totalItems: trucks.length,
+      };
+    }
+
+    const [totalTrucks, trucks] = await Promise.all([
+      TruckModel.countDocuments({}).exec(),
+      TruckModel.find({})
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec(),
+    ]);
+
+    const totalPages = Math.ceil(totalTrucks / limit);
+
+    return {
+      items: trucks.map((truck) => Truck.FromDocument(truck)),
+      totalPages,
+      totalItems: totalTrucks,
+    };
+  }
+
   async findById(id: string): Promise<Truck> {
     const truckDocument: ITruckDocument | null = await TruckModel.findById(id).exec();
     if (!truckDocument) return null;

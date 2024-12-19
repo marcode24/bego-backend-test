@@ -3,5 +3,9 @@ export interface IBaseRepository<T> {
   // update(data: T): Promise<T>;
   delete(id: string): Promise<boolean>;
   findById(id: string): Promise<T>;
-  // findAll(): Promise<T[]>;
+  find(
+    all: boolean,
+    page?: number,
+    limit?: number
+  ): Promise<{ items: T[]; totalPages: number; totalItems: number }>;
 }

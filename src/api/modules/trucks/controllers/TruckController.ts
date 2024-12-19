@@ -4,13 +4,15 @@ import { Request, Response } from 'express';
 import { CreateTruckRequest } from 'application/modules/trucks/DTOs/Requests/CreateTruckRequest.ts';
 import DeleteTruck from 'application/modules/trucks/DeleteTruck.ts';
 import GetTruck from 'application/modules/trucks/GetTruck.ts';
+import GetTrucks from 'application/modules/trucks/GetTrucks.ts';
 
 @injectable()
 export class TruckController {
   constructor(
     @inject('CreateTruck') private readonly createTruck: CreateTruck,
     @inject('DeleteTruck') private readonly deleteTruck: DeleteTruck,
-    @inject('GetTruck') private readonly getTruck: GetTruck
+    @inject('GetTruck') private readonly getTruck: GetTruck,
+    @inject('GetTrucks') private readonly getTrucks: GetTrucks
   ) {}
 
   async create(request: Request, response: Response): Promise<void> {
@@ -28,6 +30,12 @@ export class TruckController {
   async findById(request: Request, response: Response): Promise<void> {
     const { id } = request.params;
     const result = await this.getTruck.execute(id);
+    response.status(result.statusCode).json(result);
+  }
+
+  async findAll(request: Request, response: Response): Promise<void> {
+    const { all, page = 1, limit = 10 } = request.query;
+    const result = await this.getTrucks.execute(all === 'true', +page, +limit);
     response.status(result.statusCode).json(result);
   }
 }

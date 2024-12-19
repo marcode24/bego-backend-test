@@ -9,6 +9,8 @@ import { truckIdValidator } from 'application/modules/trucks/validators/TruckIdV
 export default (prefix: string, app: Router): void => {
   const truckController = container.resolve(TruckController);
 
+  app.get(`${prefix}/trucks`, (req, res) => truckController.findAll(req, res));
+
   app.get(`${prefix}/trucks/:id`, validateParams(truckIdValidator), (req, res) =>
     truckController.findById(req, res)
   );
