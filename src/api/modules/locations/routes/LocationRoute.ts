@@ -20,4 +20,11 @@ export default (prefix: string, app: Router): void => {
   app.post(`${prefix}/locations`, validateRequest(CreateLocationValidator), (req, res) =>
     locationController.create(req, res)
   );
+
+  app.delete(
+    `${prefix}/locations/:id`,
+    validateJwt,
+    validateParams(GetLocationValidator),
+    (req, res) => locationController.delete(req, res)
+  );
 };

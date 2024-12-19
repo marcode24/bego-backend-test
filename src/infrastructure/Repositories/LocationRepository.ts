@@ -20,8 +20,9 @@ export class LocationRepository implements ILocationRepository {
   update(id: string, newData: Partial<Location>): Promise<Location> {
     throw new Error('Method not implemented.');
   }
-  delete(id: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<boolean> {
+    const locationDocument = await LocationModel.findByIdAndDelete(id).exec();
+    return !!locationDocument;
   }
 
   async findById(id: string): Promise<Location> {

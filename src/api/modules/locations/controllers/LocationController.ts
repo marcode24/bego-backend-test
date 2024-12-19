@@ -1,4 +1,5 @@
 import CreateLocation from 'application/modules/locations/CreateLocation.ts';
+import DeleteLocation from 'application/modules/locations/DeleteLocation.ts';
 import GetLocation from 'application/modules/locations/GetLocation.ts';
 import { Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
@@ -7,7 +8,8 @@ import { inject, injectable } from 'tsyringe';
 export class LocationController {
   constructor(
     @inject('CreateLocation') private createLocation: CreateLocation,
-    @inject('GetLocation') private getLocation: GetLocation
+    @inject('GetLocation') private getLocation: GetLocation,
+    @inject('DeleteLocation') private deleteLocation: DeleteLocation
   ) {}
 
   async create(request: Request, response: Response): Promise<void> {
@@ -19,6 +21,12 @@ export class LocationController {
   async get(request: Request, response: Response): Promise<void> {
     const { id } = request.params;
     const result = await this.getLocation.execute(id);
+    response.status(result.statusCode).json(result);
+  }
+
+  async delete(request: Request, response: Response): Promise<void> {
+    const { id } = request.params;
+    const result = await this.deleteLocation.execute(id);
     response.status(result.statusCode).json(result);
   }
 }
