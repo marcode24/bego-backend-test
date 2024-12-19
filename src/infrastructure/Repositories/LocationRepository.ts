@@ -23,9 +23,12 @@ export class LocationRepository implements ILocationRepository {
   delete(id: string): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
-  findById(id: string): Promise<Location> {
-    throw new Error('Method not implemented.');
+
+  async findById(id: string): Promise<Location> {
+    const location = await LocationModel.findById(id).exec();
+    return location ? Location.FromDocument(location) : null;
   }
+
   find(
     all: boolean,
     page?: number,

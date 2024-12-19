@@ -2,6 +2,7 @@ export class LocationMessages {
   public static readonly locationDeleted = 'Location deleted';
   public static readonly locationUpdated = 'Location updated';
   public static readonly locationCreated = 'Location created';
+  public static readonly locationFound = 'Location found';
   public static readonly locationsNotFound = 'Locations not found';
   public static readonly locationsFound = 'Locations found';
   public static readonly CreateLocationSuccess = 'Location created';
@@ -22,4 +23,7 @@ export class LocationMessages {
 
   public static readonly PlaceIdNotFound = (placeId: string): string =>
     `PlaceId ${placeId} not found`;
+
+  public static readonly LocationNotFoundWithId = (id: string): string =>
+    `Location with id ${id} not found`;
 }
