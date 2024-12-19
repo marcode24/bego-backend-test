@@ -15,4 +15,10 @@ export class OrderMessages {
 
   public static readonly PickUpLocationNotFound: string = 'Pickup location not found';
   public static readonly DropOffLocationNotFound: string = 'Dropoff location not found';
+
+  public static readonly InvalidStatusTransition = (from: string, to: string): string =>
+    `Invalid status transition from ${from} to ${to}`;
+
+  public static readonly OrderChangeStatusSuccess = (status: string): string =>
+    `Order status changed to ${status}`;
 }
